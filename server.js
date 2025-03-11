@@ -14,6 +14,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from './models/User.js'; 
 import session from 'express-session';
+import cors from 'cors';
 const app = express();
 
 app.use(session({
@@ -27,6 +28,14 @@ app.use(session({
 
 dotenv.config();
 connectDB(); 
+
+// ✅ CORS Middleware (Frontend & Backend Different Domains)
+app.use(cors({
+    origin: ["https://chatty-rfb5.onrender.com"], // ✅ Apne frontend ka URL yaha daalo
+    credentials: true,  // ✅ Cookies/session allow karne ke liye zaroori hai
+    methods: ["GET", "POST", "PUT", "DELETE"],  // ✅ Allowed methods
+    allowedHeaders: ["Content-Type", "Authorization"]  // ✅ Headers allow karo
+}));
 
 
 app.use(express.json()); 
