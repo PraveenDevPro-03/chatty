@@ -1,12 +1,43 @@
 
 const socket = io()
 
-let name;
+
 let textarea = document.querySelector('#textarea')
 let messagearea = document.querySelector('.message_area')
-do {
-    name = prompt('please enter your name')
-} while (!name)
+
+
+let name = '';
+
+// ✅ Fetch the logged-in user's name from the server
+async function getUserDetails() {
+    try {
+        let response = await fetch('/getUser');
+        let data = await response.json();
+
+        if (data.success) {
+            name = data.user.name;
+            document.getElementById("usernameDisplay").innerText = name;
+
+            // ✅ Only redirect if not already on /chat
+            if (window.location.pathname !== "/chat") {
+                window.location.href = "/chat";
+            }
+        } else {
+            // ✅ Only redirect if not already on /
+            if (window.location.pathname !== "/") {
+                window.location.href = "/";
+            }
+        }
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+    }
+}
+
+// ✅ Call function on page load
+getUserDetails();
+
+
+
 
 window.addEventListener('beforeunload', () => {
     sessionStorage.removeItem('chatMessages');
