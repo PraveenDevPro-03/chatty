@@ -12,7 +12,6 @@ window.addEventListener('beforeunload', () => {
     sessionStorage.removeItem('chatMessages');
 });
 
-// नाम मिलने के बाद UI पर दिखाओ
 document.getElementById("usernameDisplay").innerText = name;
 
 
@@ -34,7 +33,8 @@ function sendMessage(message) {
 
     let msg = {
         user: name,
-        message: message.trim()
+        message: message.trim(),
+        timestamp: new Date().toISOString()
     }
 
     appendMessage(msg, 'outgoing')
@@ -50,8 +50,18 @@ function appendMessage(msg, type) {
     let mainDiv = document.createElement('div')
     let className = type
     mainDiv.classList.add(className, 'message')
+
+    let dateTime = new Date(msg.timestamp).toLocaleString('en-US', { 
+        day: '2-digit', 
+        month: '2-digit', 
+        year: 'numeric', 
+        hour: '2-digit', 
+        minute: '2-digit', 
+        hour12: true 
+    });
+
     let markup = `
-        <h4>${msg.user}</h4>
+        <h4>${msg.user} &nbsp;<span class="time">${dateTime}</span></h4>
         <p>${msg.message}</p>
 
     `

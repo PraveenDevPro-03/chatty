@@ -174,6 +174,23 @@ textarea::placeholder {
 
 
 
+/* //time */
+
+
+
+.message h4 {
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.time {
+    font-size: 12px;
+    color: rgb(54, 51, 51);
+    font-weight: normal;
+}
+
 
 
 @keyframes fadeIn {
